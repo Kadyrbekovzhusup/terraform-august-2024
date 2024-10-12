@@ -1,6 +1,6 @@
 resource "aws_iam_user" "lb" {
     for_each = toset(["tim","adam","brad","ann"])
-  name = each.value
+  name = each.value 
 }
 
 resource "aws_iam_group" "developers" {
