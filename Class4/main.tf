@@ -4,8 +4,8 @@
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
   public_key = file("~/.ssh/id_rsa.pub")
-  
-  }
+
+}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -24,18 +24,18 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "web" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  subnet_id = aws_subnet.main.id
-  key_name = aws_key_pair.deployer.key_name
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.main.id
+  key_name               = aws_key_pair.deployer.key_name
   vpc_security_group_ids = [aws_security_group.allow_tls.id]
-  user_data = file ("apache.sh")
+  user_data              = file("apache.sh")
 }
 
 
 
 output "ec2" {
-value = aws_instance.web.public_ip
+  value = aws_instance.web.public_ip
 
 }
 
